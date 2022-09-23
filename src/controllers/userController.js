@@ -1,3 +1,4 @@
+import session from "express-session";
 import User from "../models/User";
 
 export const signup = async (req, res) => {
@@ -15,6 +16,9 @@ export const login = async (req, res) => {
   if (!user) {
     return res.status(400).end();
   }
+  req.session.user = user;
+  req.session.loggedIn = true;
+  console.log(req.session);
   console.log("⭕ Login Success ✨✨ ");
-  return res.end();
+  return res.send(req.session.loggedIn);
 };
