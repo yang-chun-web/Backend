@@ -5,7 +5,7 @@
   "main": "src/server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "nodemon --exec babel-node src/server.js"
+    "dev": "nodemon --exec babel-node src/init.js"
   },
   "repository": {
     "type": "git",
@@ -18,13 +18,19 @@
   },
   "homepage": "https://github.com/yang-chun-web/Backend#readme",
   "dependencies": {
+    "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.0.2",
     "express": "^4.18.1",
-    "mongoose": "^6.6.1",
-    "nodemon": "^2.0.20"
+    "express-session": "^1.17.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.6.1"
   },
   "devDependencies": {
     "@babel/core": "^7.19.1",
     "@babel/node": "^7.19.1",
-    "@babel/preset-env": "^7.19.1"
+    "@babel/preset-env": "^7.19.1",
+    "nodemon": "^2.0.20"
   }
 }
