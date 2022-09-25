@@ -1,15 +1,13 @@
-export const protectorMiddleware = (req, res, next) => {
-  if (req.session.loggedIn) {
-    next();
-  } else {
-    return res.status(400).end();
-  }
-};
+import jwt from "jsonwebtoken";
 
-export const publicOnlyMiddleware = (req, res, next) => {
-  if (!req.session.loggedIn) {
+export const jwtMiddleware = (req, res, next) => {
+  const token = req.cookies["Access_Token"];
+  if (!token) next();
+  try {
+    const checkUser = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = checkUser;
     return next();
-  } else {
-    return res.status(400).end();
+  } catch {
+    return next();
   }
 };

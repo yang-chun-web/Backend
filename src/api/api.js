@@ -1,12 +1,14 @@
 import express from "express";
-import { signup, login, logout } from "../controllers/userController";
-import { textRegist } from "../controllers/boardController";
-import { publicOnlyMiddleware } from "../middlewares";
+import { signup, login, logout, check } from "../controllers/userController";
+import { createText } from "../controllers/boardController";
+import { jwtMiddleware } from "../middlewares";
 
 const api = express.Router();
 api.route("/login").post(login);
-api.route("/signup").all(publicOnlyMiddleware).post(signup);
-api.route("/logout").get(logout);
-api.post("/textRegist", textRegist);
+api.route("/signup").post(signup);
+api.route("/logout").post(logout);
+api.route("/check").all(jwtMiddleware).get(check);
+
+api.route("/createText").all(jwtMiddleware).post(createText);
 
 export default api;
