@@ -1,7 +1,7 @@
 import Board from "../models/Board";
 import User from "../models/User";
 
-export const writeOnTheBoard = async (req, res) => {
+export const write = async (req, res) => {
   const { title, contents } = req.body;
   const { _id } = req.user;
   const writing = await Board.create({
@@ -15,8 +15,12 @@ export const writeOnTheBoard = async (req, res) => {
   return res.send("Regist Text");
 };
 
-export const boardView = async (rea, res) => {
+export const view = async (req, res) => {
   const writings = await Board.find().exec();
-  console.log(writings);
   return res.send(writings);
+};
+
+export const detail = async (req, res) => {
+  const writing = await Board.findById(req.params.id);
+  return res.status(200).send(writing);
 };
