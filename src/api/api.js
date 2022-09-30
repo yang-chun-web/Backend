@@ -7,7 +7,7 @@ import {
   refresh,
 } from "../controllers/userController";
 import { write, view, detail } from "../controllers/boardController";
-import { jwtMiddleware } from "../middlewares";
+import { jwtMiddleware, tokenCheck } from "../middlewares";
 
 const api = express.Router();
 api.route("/login").post(login);
@@ -16,7 +16,7 @@ api.route("/logout").post(logout);
 api.route("/check").all(jwtMiddleware).get(check);
 api.route("/refresh").all(jwtMiddleware).post(refresh);
 
-api.route("/write").all(jwtMiddleware).post(write);
+api.route("/write").all(tokenCheck).post(write);
 api.route("/view").get(view);
 api.route("/detail/:id").get(detail);
 

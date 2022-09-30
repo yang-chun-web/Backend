@@ -11,3 +11,15 @@ export const jwtMiddleware = (req, res, next) => {
     return next();
   }
 };
+
+export const tokenCheck = (req, res, next) => {
+  const token = req.headers.authorization;
+  if (!token) next();
+  try {
+    const checkToken = jwt.verify(token, process.env.JWT_ACCESS);
+    req.user = checkToken;
+    return next();
+  } catch {
+    return next();
+  }
+};
