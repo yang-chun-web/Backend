@@ -15,12 +15,19 @@ userSchema.pre("save", async function () {
   }
 });
 
-userSchema.methods.generateToken = function () {
+userSchema.methods.generateAccessToken = function () {
   const token = jwt.sign(
     { _id: this.id, email: this.email },
-    process.env.JWT_SECRET,
-    { expiresIn: "24h" }
+    process.env.JWT_ACCESS,
+    { expiresIn: "1h" }
   );
+  return token;
+};
+
+userSchema.methods.generateRefreshToken = function () {
+  const token = jwt.sign({}, process.env.JWT_SECRET, {
+    expiresIn: "24h",
+  });
   return token;
 };
 
