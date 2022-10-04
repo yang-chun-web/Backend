@@ -18,7 +18,7 @@ api.route("/refresh").all(jwtMiddleware).post(refresh);
 
 api.route("/write").all(tokenCheck).post(write);
 api.route("/view").get(view);
-api.route("/detail/:id").get(detail);
+api.route("/detail/:id").all(tokenCheck).get(detail);
 api.route("/remove").all(tokenCheck).post(remove);
 
 export default api;
