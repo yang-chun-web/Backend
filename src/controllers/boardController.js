@@ -24,3 +24,18 @@ export const detail = async (req, res) => {
   const writing = await Board.findById(req.params.id);
   return res.status(200).send(writing);
 };
+
+export const remove = async (req, res) => {
+  const findUser = await User.findById(req.user._id);
+  const findText = await Board.findById(req.body.id);
+  if (String(findText.writer) !== String(findUser._id)) {
+    return res.status(403).end();
+  }
+  const texts = findUser.texts.filter(
+    (text) => String(text) !== String(findText._id)
+  );
+  findUser.texts = texts;
+  findUser.save();
+  await Board.findByIdAndDelete(req.body.id);
+  return res.end();
+};
