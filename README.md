@@ -97,7 +97,7 @@
 게시글 삭제
 
 - 게시글 조회중인 유저와 작성자가 불일치할 경우 ← `403`
-
+    
 ## API 명세
 
 ---
@@ -119,3 +119,32 @@
 | /detail/:id | GET | 게시 글 내용 조회 |
 | /edit | PUT | 게시 글 수정 |
 | /remove | POST | 게시 글 삭제 |
+
+
+### Dependencies
+
+---
+
+npm install bcypt
+
+npm install connect-mongo
+
+npm install dotenv
+
+npm install cookie-parser
+
+npm install express
+
+npm install express-session
+
+npm install jsonwebtoken
+
+npm install mongoose
+
+npm install @babel/core
+
+npm install @babel/node
+
+npm install @babel/preset-env
+
+npm install nodemon
