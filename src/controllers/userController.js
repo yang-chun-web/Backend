@@ -50,14 +50,6 @@ export const logout = (req, res) => {
   return res.status(204).send("Logout");
 };
 
-export const check = async (req, res) => {
-  const { refreshToken } = req;
-  if (!refreshToken) {
-    return res.status(401).send({ message: "Unauthorized" });
-  }
-  return res.status(200).send(refreshToken);
-};
-
 export const refresh = async (req, res) => {
   const { refreshToken } = req;
   if (!refreshToken) {

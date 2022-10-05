@@ -22,11 +22,13 @@ export const view = async (req, res) => {
 
 export const detail = async (req, res) => {
   const writing = await Board.findById(req.params.id);
+  let writer = false;
   if (req.user) {
-    const writer = { writer: req.user._id === String(writing.writer) };
+    writer = { writer: req.user._id === String(writing.writer) };
+    console.log(writer);
     return res.status(200).send({ text: writing, writer });
   }
-  return res.status(200).send({ text: writing });
+  return res.status(200).send({ text: writing, writer });
 };
 
 export const remove = async (req, res) => {
