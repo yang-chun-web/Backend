@@ -6,7 +6,13 @@ import {
   check,
   refresh,
 } from "../controllers/userController";
-import { write, view, detail, remove } from "../controllers/boardController";
+import {
+  write,
+  view,
+  detail,
+  remove,
+  edit,
+} from "../controllers/boardController";
 import { jwtMiddleware, tokenCheck } from "../middlewares";
 
 const api = express.Router();
@@ -19,6 +25,7 @@ api.route("/refresh").all(jwtMiddleware).post(refresh);
 api.route("/write").all(tokenCheck).post(write);
 api.route("/view").get(view);
 api.route("/detail/:id").all(tokenCheck).get(detail);
+api.route("/edit").put(edit);
 api.route("/remove").all(tokenCheck).post(remove);
 
 export default api;
