@@ -23,7 +23,6 @@ export const view = async (req, res) => {
 export const detail = async (req, res) => {
   const writing = await Board.findById(req.params.id);
   if (req.user) {
-    console.log(req.user._id === String(writing.writer));
     const writer = { writer: req.user._id === String(writing.writer) };
     return res.status(200).send({ text: writing, writer });
   }
@@ -42,5 +41,13 @@ export const remove = async (req, res) => {
   findUser.texts = texts;
   findUser.save();
   await Board.findByIdAndDelete(req.body.id);
-  return res.end();
+  return res.status(200).end();
+};
+
+export const edit = async (req, res) => {
+  await Board.findByIdAndUpdate(req.body._id, {
+    title: req.body.title,
+    contents: req.body.contents,
+  });
+  return res.status(200).end();
 };
