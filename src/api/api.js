@@ -19,7 +19,6 @@ const api = express.Router();
 api.route("/login").post(login);
 api.route("/signup").post(signup);
 api.route("/logout").post(logout);
-api.route("/check").all(jwtMiddleware).get(check);
 api.route("/refresh").all(jwtMiddleware).post(refresh);
 
 api.route("/write").all(tokenCheck).post(write);
