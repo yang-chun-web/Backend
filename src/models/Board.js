@@ -6,6 +6,7 @@ const boardSchema = new mongoose.Schema({
   createdAt: { type: Date, required: true, default: Date.now() },
   updatedAt: { type: Date, defualt: Date.now() },
   writer: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+  files: [{ type: String }],
 });
 
 const Board = mongoose.model("Board", boardSchema);

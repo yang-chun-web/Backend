@@ -4,15 +4,19 @@ import User from "../models/User";
 export const write = async (req, res) => {
   const { title, contents } = req.body;
   const { _id } = req.user;
-  const writing = await Board.create({
-    title,
-    contents,
-    writer: _id,
-  });
-  const user = await User.findById(_id);
-  user.texts.push(writing._id);
-  user.save();
-  return res.send("Regist Text");
+  try {
+    const writing = await Board.create({
+      title,
+      contents,
+      writer: _id,
+    });
+    const user = await User.findById(_id);
+    user.texts.push(writing._id);
+    user.save();
+    return res.status(200).send(writing);
+  } catch (error) {
+    res.status(500).send({ message: error });
+  }
 };
 
 export const view = async (req, res) => {
@@ -29,6 +33,12 @@ export const detail = async (req, res) => {
     return res.status(200).send({ text: writing, writer });
   }
   return res.status(200).send({ text: writing, writer });
+};
+
+export const fileList = async (req, res) => {
+  const writing = await Board.findById(req.params.id);
+  console.log(writing.files[0]);
+  return res.send(writing.files[0]);
 };
 
 export const remove = async (req, res) => {
@@ -52,4 +62,44 @@ export const edit = async (req, res) => {
     contents: req.body.contents,
   });
   return res.status(200).end();
+};
+
+const uploadResult = {
+  success: (status, message, data) => {
+    return {
+      status: status,
+      success: true,
+      message: message,
+      data: data,
+    };
+  },
+  fail: (status, message) => {
+    return {
+      status: status,
+      success: false,
+      message: message,
+    };
+  },
+};
+
+export const test = async (req, res) => {
+  const { title, contents } = req.body;
+  const { _id } = req.user;
+  const uploadFiles = req.files;
+  const path = uploadFiles.map((file) => file.path);
+  try {
+    const writing = await Board.create({
+      title,
+      contents,
+      writer: _id,
+      files: path,
+    });
+    const user = await User.findById(_id);
+    console.log(_id, title, contents, path);
+    user.texts.push(writing._id);
+    user.save();
+    res.status(200).send(uploadResult.success(200, "업로드 성공", path));
+  } catch (error) {
+    res.status(500).send({ message: error });
+  }
 };

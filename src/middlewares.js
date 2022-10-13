@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import multer from "multer";
 
 export const jwtMiddleware = (req, res, next) => {
   const token = req.cookies["Refresh_Token"];
@@ -23,3 +24,17 @@ export const tokenCheck = (req, res, next) => {
     return next();
   }
 };
+
+const fileUpload = multer({
+  storage: multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, "uploads/");
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.originalname);
+    },
+  }),
+  limits: { fileSize: 3 * 1024 * 1024 },
+});
+
+export const filesUpload = fileUpload.array("file", 5);
