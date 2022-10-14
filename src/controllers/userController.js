@@ -60,5 +60,6 @@ export const refresh = async (req, res) => {
   const { _id } = checkUser;
   const user = await User.findOne({ _id });
   const accessToken = user.generateAccessToken();
+  console.log("💥 Token Regenerated ");
   return res.status(200).send(accessToken);
 };

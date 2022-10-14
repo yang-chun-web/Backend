@@ -9,7 +9,7 @@ export const jwtMiddleware = (req, res, next) => {
     req.refreshToken = checkRefreshToken;
     return next();
   } catch {
-    return next();
+    return res.status(401).send({ message: "Token Expired" });
   }
 };
 
