@@ -7,7 +7,7 @@ import {
   remove,
   edit,
   fileList,
-  test,
+  register,
 } from "../controllers/boardController";
 import { filesUpload, jwtMiddleware, tokenCheck } from "../middlewares";
 
@@ -24,6 +24,6 @@ api.route("/files/:id").all(tokenCheck).get(fileList);
 api.route("/edit").put(edit);
 api.route("/remove").all(tokenCheck).post(remove);
 
-api.route("/test").all(tokenCheck).post(filesUpload, test);
+api.route("/register").all(tokenCheck).post(filesUpload, register);
 
 export default api;

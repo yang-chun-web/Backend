@@ -1,24 +1,6 @@
 import Board from "../models/Board";
 import User from "../models/User";
 
-export const write = async (req, res) => {
-  const { title, contents } = req.body;
-  const { _id } = req.user;
-  try {
-    const writing = await Board.create({
-      title,
-      contents,
-      writer: _id,
-    });
-    const user = await User.findById(_id);
-    user.texts.push(writing._id);
-    user.save();
-    return res.status(200).send(writing);
-  } catch (error) {
-    res.status(500).send({ message: error });
-  }
-};
-
 export const view = async (req, res) => {
   const writings = await Board.find().exec();
   return res.send(writings);
@@ -82,7 +64,7 @@ const uploadResult = {
   },
 };
 
-export const test = async (req, res) => {
+export const register = async (req, res) => {
   const { title, contents } = req.body;
   const { _id } = req.user;
   const uploadFiles = req.files;
